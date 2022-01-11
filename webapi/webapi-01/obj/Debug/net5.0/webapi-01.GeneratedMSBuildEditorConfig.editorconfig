@@ -7,4 +7,4 @@ build_property.InvariantGlobalization =
 build_property.PlatformNeutralAssembly = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = webapi_01
-build_property.ProjectDir = D:\Robin\Learning\DotNetCore\Web\webapi\webapi-01\
+build_property.ProjectDir = D:\Robin\Learning\Git\dotnetcore-webapi-01\webapi\webapi-01\
