@@ -2,10 +2,8 @@
 
 # compiled output
 bin/
-
-
-webapi/webapi-01/bin/Debug/net5.0/webapi-01.dll
-webapi/webapi-01/bin/Debug/net5.0/webapi-01.pdb
-webapi/webapi-01/Controllers/WeatherForecastController.cs
-webapi/webapi-01/obj/Debug/net5.0/webapi-01.dll
-webapi/webapi-01/obj/Debug/net5.0/webapi-01.pdb
+/bin
+/webapi-01.dll
+/webapi-01.pdb
+/webapi-01.dll
+/webapi-01.pdb
