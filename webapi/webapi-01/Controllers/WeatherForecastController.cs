@@ -22,6 +22,8 @@ namespace webapi_01.Controllers
         {
             _logger = logger;
 
+            string dd = string.Empty;
+
         }
 
         [HttpGet]
