@@ -23,6 +23,7 @@ namespace webapi_01.Controllers
             _logger = logger;
 
             string dd = string.Empty;
+            string dd1 = string.Empty;
 
         }
 
