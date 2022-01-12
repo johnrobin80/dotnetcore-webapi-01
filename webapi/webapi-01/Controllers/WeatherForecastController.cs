@@ -24,6 +24,7 @@ namespace webapi_01.Controllers
 
             string dd = string.Empty;
             string dd1 = string.Empty;
+            string dd2 = string.Empty;
 
         }
 
