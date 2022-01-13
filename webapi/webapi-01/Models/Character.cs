@@ -3,7 +3,7 @@ namespace webapi_01.Models
     public class Character
     {
         public int Id { get; set; }
-        public string Name { get; set; } = "Galaxy";
+        public string Name { get; set; } = "Galaxys";
         public int HitPoints { get; set; } = 100;
         public int Strength { get; set; } = 10;
         public int Defense { get; set; } = 10;
