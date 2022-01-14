@@ -26,7 +26,7 @@ namespace webapi_01.Controllers
 
     [HttpGet("GetAll")]
     //[Route("GetAll")]
-    public ActionResult<Character> Get()
+    public ActionResult<List<Character>> Get()
     {
        return Ok(characters);
     }
@@ -41,6 +41,13 @@ namespace webapi_01.Controllers
     public ActionResult<Character> GetSingle(int id)
     {
     return Ok(characters.FirstOrDefault(c => c.Id == id));
+    }
+
+    [HttpPost]
+    public ActionResult<List<Character>> AddCharacter(Character newCharacter)
+    {
+        characters.Add(newCharacter);
+        return Ok(characters);
     }
       
     }
