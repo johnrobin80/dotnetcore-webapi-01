@@ -21,11 +21,6 @@ namespace webapi_01.Controllers
         public WeatherForecastController(ILogger<WeatherForecastController> logger)
         {
             _logger = logger;
-
-            string dd = string.Empty;
-            string dd1 = string.Empty;
-            string ddrrr = string.Empty;
-
         }
 
         [HttpGet]
