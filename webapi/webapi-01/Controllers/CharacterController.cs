@@ -1,7 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using webapi_01.Dtos.Character;
 using webapi_01.Models;
+using webapi_01.Services.CharacterService;
 
 namespace webapi_01.Controllers
 {
@@ -9,46 +12,56 @@ namespace webapi_01.Controllers
     [Route("[controller]")]
     public class CharacterController : ControllerBase
     {
-    // private static Character knight = new Character();
+        // private static Character knight = new Character();
 
-    // [HttpGet]
-    // public ActionResult<Character> Get()
-    // {
-    //    return Ok(knight);
-    // }
+        // [HttpGet]
+        // public ActionResult<Character> Get()
+        // {
+        //    return Ok(knight);
+        // }
 
-        private static List<Character> characters = new List<Character>{
-            new Character(),
-            new Character{Id=1,Name="Test1",HitPoints=100000,Class = RpgClass.Knight},
-            new Character{Id=2,Name="Test2",HitPoints=200000,Class = RpgClass.Mage},
-            new Character{Id=3,Name="Test3",HitPoints=300000,Class = RpgClass.Cleric}
-        };
+        // private static List<Character> characters = new List<Character>{
+        //     new Character(),
+        //     new Character{Id=1,Name="Test1",HitPoints=100000,Class = RpgClass.Knight},
+        //     new Character{Id=2,Name="Test2",HitPoints=200000,Class = RpgClass.Mage},
+        //     new Character{Id=3,Name="Test3",HitPoints=300000,Class = RpgClass.Cleric}
+        // };
+        private readonly ICharacterService _charaterService;
 
-    [HttpGet("GetAll")]
-    //[Route("GetAll")]
-    public ActionResult<List<Character>> Get()
-    {
-       return Ok(characters);
-    }
+        public CharacterController(ICharacterService charaterService)
+        {
+            _charaterService = charaterService;
 
-    // [HttpGet]
-    // public ActionResult<Character> GetSingle()
-    // {
-    // return Ok(characters[0]);
-    // }
+        }
 
-    [HttpGet("{id}")]
-    public ActionResult<Character> GetSingle(int id)
-    {
-    return Ok(characters.FirstOrDefault(c => c.Id == id));
-    }
+        [HttpGet("GetAll")]
+        //[Route("GetAll")]
+        public async Task<ActionResult<ServiceResponse<List<GetCharacterDto>>>> Get()
+        {
+            //return Ok(characters);
+            return Ok(await _charaterService.GetAllCharacters());
+        }
 
-    [HttpPost]
-    public ActionResult<List<Character>> AddCharacter(Character newCharacter)
-    {
-        characters.Add(newCharacter);
-        return Ok(characters);
-    }
-      
+        // [HttpGet]
+        // public ActionResult<Character> GetSingle()
+        // {
+        // return Ok(characters[0]);
+        // }
+
+        [HttpGet("GetById")]
+        public async Task<ActionResult<ServiceResponse<GetCharacterDto>>> GetSingle(int id)
+        {
+            // return Ok(characters.FirstOrDefault(c => c.Id == id));
+            return Ok(await _charaterService.GetCharacterById(id));
+        }
+
+        [HttpPost("Add")]
+        public async Task<ActionResult<ServiceResponse<List<GetCharacterDto>>>> AddCharacter(AddCharacterDto newCharacter)
+        {
+            //characters.Add(newCharacter);
+            //return Ok(characters);
+            return Ok(await _charaterService.AddCharacter(newCharacter));
+        }
+
     }
 }

@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using webapi_01.Services.CharacterService;
 
 namespace webapi_01
 {
@@ -32,6 +33,8 @@ namespace webapi_01
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "webapi_01", Version = "v1" });
             });
+            services.AddAutoMapper(typeof(Startup));
+            services.AddScoped<ICharacterService, CharacterService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
