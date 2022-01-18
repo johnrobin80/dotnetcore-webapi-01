@@ -63,5 +63,31 @@ namespace webapi_01.Controllers
             return Ok(await _charaterService.AddCharacter(newCharacter));
         }
 
+        [HttpPut("Update")]
+        public async Task<ActionResult<ServiceResponse<List<GetCharacterDto>>>> UpdateCharacter(UpdateCharacterDto updateCharacter)
+        {
+            //characters.Add(newCharacter);
+            //return Ok(characters);
+            //return Ok(await _charaterService.UpdateCharacter(updateCharacter));
+            var response = await _charaterService.UpdateCharacter(updateCharacter);
+            if (response.Data == null)
+            {
+                return NotFound(response);
+            }
+            return Ok(response);
+
+        }
+
+        [HttpDelete("Delete")]
+        public async Task<ActionResult<ServiceResponse<List<GetCharacterDto>>>> DeleteCharacter(int id)
+        {
+            var response = await _charaterService.DeleteCharacter(id);
+            if (response.Data == null)
+            {
+                return NotFound(response);
+            }
+            return Ok(response);
+        }
+
     }
 }
