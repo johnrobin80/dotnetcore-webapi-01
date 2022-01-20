@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using webapi_01.Data;
 using webapi_01.Dtos.Character;
 using webapi_01.Models;
 
@@ -19,9 +21,11 @@ namespace webapi_01.Services.CharacterService
         };
 
         private readonly IMapper _mapper;
+        private readonly DataContext _context;
 
-        public CharacterService(IMapper mapper)
+        public CharacterService(IMapper mapper, DataContext context)
         {
+            _context = context;
             _mapper = mapper;
 
         }
@@ -33,11 +37,19 @@ namespace webapi_01.Services.CharacterService
             // return serviceResponse;
 
             var serviceResponse = new ServiceResponse<List<GetCharacterDto>>();
-            Character character = _mapper.Map<Character>(newCharacter);
-            character.Id = (characters.Max(c => c.Id)) + 1;
-            characters.Add(character);
-            serviceResponse.Data = characters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList();
-            serviceResponse.Message = "Data with id:" + character.Id.ToString() + " has been added successfully..";
+            try
+            {
+                Character character = _mapper.Map<Character>(newCharacter);
+                character.Id = (characters.Max(c => c.Id)) + 1;
+                characters.Add(character);
+                serviceResponse.Data = characters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList();
+                serviceResponse.Message = "Data with id:" + character.Id.ToString() + " has been added successfully..";
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = ex.Message;
+            }
             return serviceResponse;
 
         }
@@ -63,14 +75,32 @@ namespace webapi_01.Services.CharacterService
         public async Task<ServiceResponse<List<GetCharacterDto>>> GetAllCharacters()
         {
             var serviceResponse = new ServiceResponse<List<GetCharacterDto>>();
-            serviceResponse.Data = characters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList();
+            try
+            {
+                var dbCharacters = await _context.Characters.ToListAsync();
+                serviceResponse.Data = dbCharacters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList();
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = ex.Message;
+            }
             return serviceResponse;
         }
 
         public async Task<ServiceResponse<GetCharacterDto>> GetCharacterById(int id)
         {
             var serviceResponse = new ServiceResponse<GetCharacterDto>();
-            serviceResponse.Data = _mapper.Map<GetCharacterDto>(characters.FirstOrDefault(c => c.Id == id));
+            try
+            {
+                var dbCharacters = await _context.Characters.ToListAsync();
+                serviceResponse.Data = _mapper.Map<GetCharacterDto>(dbCharacters.FirstOrDefault(c => c.Id == id));
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = ex.Message;
+            }
             return serviceResponse;
         }
 
